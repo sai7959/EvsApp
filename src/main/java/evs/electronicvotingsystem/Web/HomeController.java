@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import evs.electronicvotingsystem.Service.RoleServiceImpl;
 import evs.electronicvotingsystem.Service.UserServiceImpl;
 
 @RestController
@@ -14,10 +15,17 @@ import evs.electronicvotingsystem.Service.UserServiceImpl;
 public class HomeController {
     @Autowired
     private UserServiceImpl userServiceImpl;
+    @Autowired
+    private RoleServiceImpl roleServiceImpl;
 
     @GetMapping
     public ResponseEntity<Object> home() {
-        return new ResponseEntity<>(userServiceImpl.getCurrentUser().getEmail(), HttpStatus.OK);
+
+        return new ResponseEntity<>(
+                userServiceImpl.getCurrentUser().getEmail() + " "
+                        + ((roleServiceImpl.getCurrentRole() == null) ? ""
+                                : roleServiceImpl.getCurrentRole().getName()),
+                HttpStatus.OK);
     }
 
 }

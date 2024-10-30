@@ -3,7 +3,6 @@ package evs.electronicvotingsystem.Service;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -96,7 +95,7 @@ public class UserServiceImpl implements UserService {
     public boolean isEmailExists(String email) {
         List<User> users = (List<User>) userRepository.findAll();
         return users.stream().filter(user -> user.getEmail().equals(email) && user.isActive() && !user.isDeleted())
-                .count() == 0;
+                .count() > 0;
     }
 
     @Override
@@ -105,9 +104,7 @@ public class UserServiceImpl implements UserService {
                 userDetail -> userDetail.getUser().equals(user) && userDetail.isActive() && !userDetail.isDeleted())
                 .findFirst().orElse(null);
         System.out.println(userDetails.getDateOfBirth());
-        LocalDate dateOfBirth = LocalDate.parse(userDetails.getDateOfBirth(),
-                DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(dateOfBirth);
+        LocalDate dateOfBirth = LocalDate.parse(userDetails.getDateOfBirth().toString());
         LocalDate currentDate = LocalDate.now();
         System.out.println(currentDate);
         Period period = Period.between(dateOfBirth, currentDate);

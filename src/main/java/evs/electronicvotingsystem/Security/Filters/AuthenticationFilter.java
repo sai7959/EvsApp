@@ -12,7 +12,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import evs.electronicvotingsystem.Constants.Constants;
+import evs.electronicvotingsystem.Constants.SecurityConstants;
 import evs.electronicvotingsystem.POJO.User;
 import evs.electronicvotingsystem.Security.Manager.CustomAuthenticationManager;
 import evs.electronicvotingsystem.Service.UserRoleServiceImpl;
@@ -56,10 +56,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
             Authentication authResult) throws IOException, ServletException {
-        Algorithm algorithm = Algorithm.HMAC512(Constants.SECRET);
+        Algorithm algorithm = Algorithm.HMAC512(SecurityConstants.SECRET);
         String token = JWT.create().withSubject(authResult.getPrincipal().toString()).withClaim("role", role)
-                .withExpiresAt(new Date(System.currentTimeMillis() + Constants.TOKEN_EXPIRATION)).sign(algorithm);
-        response.addHeader(Constants.Authorization, Constants.BEARER + token);
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.TOKEN_EXPIRATION)).sign(algorithm);
+        response.addHeader(SecurityConstants.Authorization, SecurityConstants.BEARER + token);
 
     }
 

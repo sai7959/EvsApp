@@ -2,6 +2,7 @@ package evs.electronicvotingsystem.POJO;
 
 import java.util.Date;
 
+import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class Role {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Name can't be blank")
+    @NotBlank(message = AppConstants.NOT_Blank)
     @Column(name = "name")
     private String name;
 

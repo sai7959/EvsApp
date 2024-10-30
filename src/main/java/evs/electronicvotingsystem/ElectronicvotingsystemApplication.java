@@ -8,7 +8,7 @@ public class ElectronicvotingsystemApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ElectronicvotingsystemApplication.class, args);
-		System.out.println("started");
+		System.out.println("\nstarted");
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import evs.electronicvotingsystem.POJO.UserDetails;
+import evs.electronicvotingsystem.Service.RoleServiceImpl;
 import evs.electronicvotingsystem.Service.UserDetailsServiceImpl;
 import jakarta.validation.Valid;
 
@@ -23,6 +24,8 @@ import jakarta.validation.Valid;
 public class UserDetailsController {
     @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired
+    private RoleServiceImpl roleServiceImpl;
 
     @PostMapping
     public ResponseEntity<String> saveUserDetails(@Valid @RequestBody UserDetails userDetails) {
@@ -33,6 +36,9 @@ public class UserDetailsController {
 
         else if (userDetailsServiceImpl.isUserDetailsExists(userDetails.getUser())) {
             return new ResponseEntity<>("UserDetails already exists", HttpStatus.BAD_REQUEST);
+        } else if (roleServiceImpl.getVoterRole() == null) {
+            return new ResponseEntity<>("Voter role doesn't exist", HttpStatus.BAD_REQUEST);
+
         }
 
         userDetailsServiceImpl.saveUserDetails(userDetails);

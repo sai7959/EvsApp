@@ -79,13 +79,21 @@ public class UserRoleServiceImpl implements UserRoleService {
         if (currentUser == null) {
             return "";
         }
+        System.out.println(currentUser.getEmail() + " " + currentUser.getId());
         List<UserRole> userRoles = (List<UserRole>) userRoleRepository.findAll();
-        Role currentUserRole = userRoles.stream()
-                .filter(userRole -> userRole.getUser().equals(currentUser) && userRole.isActive()
-                        && !userRole.isDeleted())
-                .findFirst().map(role -> role.getRole()).orElse(null);
+        if (userRoles.isEmpty()) {
+            return "";
+        }
+        UserRole currentUserRole = userRoles.stream()
+                .filter(userRole -> userRole.getUser().getId() == currentUser.getId())
+                .findFirst().orElse(null);
+        if (currentUserRole == null) {
+            return "";
+        }
 
-        return (currentUser == null) ? "" : currentUserRole.getName();
+        Role role = currentUserRole.getRole();
+
+        return (role == null) ? "" : role.getName();
     }
 
 }

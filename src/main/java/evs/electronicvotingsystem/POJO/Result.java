@@ -1,46 +1,48 @@
 package evs.electronicvotingsystem.POJO;
 
-import java.util.Date;
-
-import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.*;
 
 @Entity
-@Table(name = "evs_user")
+@Table(name = "result")
 @Setter
 @Getter
-public class User {
+public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = AppConstants.NOT_Blank)
-    @Email(message = AppConstants.NOT_IN_FORMAT)
-    @Column(name = "email", nullable = false)
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "election_id")
+    private Election election;
 
-    @NotBlank(message = AppConstants.NOT_Blank)
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(name = "eligible_To_Vote")
-    private boolean eligibleToVote;
+    @ManyToOne
+    @JoinColumn(name = "party_id")
+    private Party party;
 
     @Column(name = "created_at")
     private Date createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User createdBy;
+
     @Column(name = "updated_at")
     private Date updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    private User updatedBy;
 
     @Column(name = "active")
     private boolean active;

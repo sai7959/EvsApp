@@ -44,6 +44,7 @@ public class VoterRequestServiceImpl implements VoterRequestService {
     public void approveVoterRequest(Long voterRequestId) {
         VoterRequest existingVoterRequest = voterRequestRepository.findById(voterRequestId)
                 .filter(request -> request.isActive() && !request.isDeleted()).orElse(null);
+
         existingVoterRequest.setApproved(true);
         existingVoterRequest.setUpdatedAt(Date.from(Instant.now()));
         existingVoterRequest.setUpdatedBy(userServiceImpl.getCurrentUser());

@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
-import evs.electronicvotingsystem.Constants.Constants;
+import evs.electronicvotingsystem.Constants.SecurityConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,14 +25,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String header = request.getHeader(Constants.Authorization);
-        if (header == null || !(header.startsWith(Constants.BEARER))) {
+        String header = request.getHeader(SecurityConstants.Authorization);
+        if (header == null || !(header.startsWith(SecurityConstants.BEARER))) {
             filterChain.doFilter(request, response);
             return;
         }
-        String token = header.replace(Constants.BEARER, "");
-        String user = JWT.require(Algorithm.HMAC512(Constants.SECRET)).build().verify(token).getSubject();
-        String role = JWT.require(Algorithm.HMAC512(Constants.SECRET)).build().verify(token).getClaim("role")
+        String token = header.replace(SecurityConstants.BEARER, "");
+        String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET)).build().verify(token).getSubject();
+        String role = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET)).build().verify(token).getClaim("role")
                 .asString().replace("\"", "");
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (!role.equals("")) {

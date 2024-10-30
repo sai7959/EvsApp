@@ -17,4 +17,8 @@ public interface RoleService {
 
     public void deleteRoleById(Long id);
 
+    public Role getVoterRole();
+
+    public Role getCurrentRole();
+
 }

@@ -1,7 +1,6 @@
 package evs.electronicvotingsystem.Service;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import evs.electronicvotingsystem.POJO.User;
 import evs.electronicvotingsystem.POJO.UserDetails;
-import evs.electronicvotingsystem.POJO.UserRole;
 import evs.electronicvotingsystem.Repository.UserDetailsRepository;
 
 @Service
@@ -28,17 +26,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails saveUserDetails(UserDetails userDetails) {
         User user = userServiceImpl.saveUser(userDetails.getUser());
         userDetails.setUser(user);
-        UserRole userRole = new UserRole();
-        userRole.setUser(user);
-        userRole.setRole(roleServiceImpl.getRoleById(2L));
-        // userRole = userRoleServiceImpl.saveUserRole(userRole);
+        userRoleServiceImpl.saveUserRole(user.getId(), roleServiceImpl.getVoterRole().getId());
         userDetails.setActive(true);
         userDetails.setDeleted(false);
-        userDetails.setCreatedAt(Date.from(Instant.now()));
-        userDetails.setUpdatedAt(Date.from(Instant.now()));
+        userDetails.setCreatedAt(LocalDateTime.now());
+        userDetails.setUpdatedAt(LocalDateTime.now());
         userDetails.setUpdatedBy(userServiceImpl.getCurrentUser());
         userDetails.setCreatedBy(userServiceImpl.getCurrentUser());
-
         return userDetailsRepository.save(userDetails);
     }
 
@@ -52,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         existingUserDetails.setAddress(userDetails.getAddress());
         existingUserDetails.setMobileNumber(userDetails.getMobileNumber());
         existingUserDetails.setDistrict(userDetails.getDistrict());
-        existingUserDetails.setUpdatedAt(Date.from(Instant.now()));
+        existingUserDetails.setUpdatedAt(LocalDateTime.now());
         existingUserDetails.setUpdatedBy(userServiceImpl.getCurrentUser());
 
         return userDetailsRepository.save(existingUserDetails);
@@ -77,7 +71,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserDetails userDetails = getUserDetailsById(id);
         userDetails.setActive(false);
         userDetails.setDeleted(true);
-        userDetails.setUpdatedAt(Date.from(Instant.now()));
+        userDetails.setUpdatedAt(LocalDateTime.now());
         userDetails.setUpdatedBy(userServiceImpl.getCurrentUser());
         userDetailsRepository.save(userDetails);
     }
@@ -86,7 +80,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public boolean isUserDetailsExists(User user) {
         List<UserDetails> userDetails = (List<UserDetails>) userDetailsRepository.findAll();
         return userDetails.stream().filter(
-                userDetail -> userDetail.getUser().equals(user) && userDetail.isActive() && !userDetail.isDeleted())
+                userDetail -> userDetail.getUser().getEmail().equals(user.getEmail()) && userDetail.isActive()
+                        && !userDetail.isDeleted())
                 .count() > 0;
 
     }

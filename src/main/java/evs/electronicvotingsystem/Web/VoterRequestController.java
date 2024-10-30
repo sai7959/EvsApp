@@ -64,6 +64,7 @@ public class VoterRequestController {
 
         }
         voterRequestServiceImpl.approveVoterRequest(id);
+
         return new ResponseEntity<>("Approved", HttpStatus.OK);
 
     }
