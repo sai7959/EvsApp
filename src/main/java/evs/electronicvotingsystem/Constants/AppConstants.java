@@ -1,7 +1,6 @@
 package evs.electronicvotingsystem.Constants;
 
 public class AppConstants {
-    public static final String DATABASE_NAME = "EvsDatabase";
 
     public static final String NOT_NULL = "Can't be null";
     public static final String NOT_Blank = "Can't be blank";
