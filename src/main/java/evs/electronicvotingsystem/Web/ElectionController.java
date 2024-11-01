@@ -2,7 +2,6 @@ package evs.electronicvotingsystem.Web;
 
 import java.time.Instant;
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +79,17 @@ public class ElectionController {
         election.getParties().add(party);
         electionServiceImpl.addPartyToElection(election);
         return new ResponseEntity<>("Party added successfully", HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{electionId}/party")
+    public ResponseEntity<Object> getElectionparties(@PathVariable Long electionId) {
+        if (electionServiceImpl.getElectionparties(electionId) == null
+                || electionServiceImpl.getElectionparties(electionId).isEmpty()) {
+            return new ResponseEntity<>("No records", HttpStatus.NO_CONTENT);
+
+        }
+        return new ResponseEntity<>(electionServiceImpl.getElectionparties(electionId), HttpStatus.OK);
 
     }
 

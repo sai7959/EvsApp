@@ -53,4 +53,17 @@ public class PartyController {
 
     }
 
+    @GetMapping("/{partyId}/votes")
+    public ResponseEntity<Object> getPartyVotes(@PathVariable Long partyId) {
+        Party party = partyServiceImpl.getPartyById(partyId);
+        if (party == null) {
+            return new ResponseEntity<>("Party doesn't exist", HttpStatus.BAD_REQUEST);
+        } else if (partyServiceImpl.getPartyVotes(partyId).isEmpty()
+                || partyServiceImpl.getPartyVotes(partyId) == null) {
+            return new ResponseEntity<>("No votes", HttpStatus.NO_CONTENT);
+
+        }
+        return new ResponseEntity<>(partyServiceImpl.getPartyVotes(partyId), HttpStatus.OK);
+    }
+
 }

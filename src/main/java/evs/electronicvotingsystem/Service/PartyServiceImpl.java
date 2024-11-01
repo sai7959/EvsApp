@@ -2,11 +2,13 @@ package evs.electronicvotingsystem.Service;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import evs.electronicvotingsystem.POJO.Party;
+import evs.electronicvotingsystem.POJO.Vote;
 import evs.electronicvotingsystem.Repository.PartyRepository;
 
 @Service
@@ -41,6 +43,13 @@ public class PartyServiceImpl implements PartyService {
         party.setUpdatedAt(Date.from(Instant.now()));
         party.setUpdatedBy(userServiceImpl.getCurrentUser());
         partyRepository.save(party);
+    }
+
+    @Override
+    public List<Vote> getPartyVotes(Long partyId) {
+        Party party = getPartyById(partyId);
+        return party.getVotes();
+
     }
 
 }

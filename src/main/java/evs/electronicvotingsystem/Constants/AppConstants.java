@@ -5,6 +5,8 @@ public class AppConstants {
 
     public static final String NOT_NULL = "Can't be null";
     public static final String NOT_Blank = "Can't be blank";
+    public static final String MIN_VALUE = "Can't be zero or negative";
+    public static final String FUTURE_DATE = "Date should be future";
 
     public static final String GENDER_PATTERN = "[MmFfTt]";
     public static final String GENDER_VALIDATION_MESSAGE = "Gender must be 'M', 'F', or 'T'";

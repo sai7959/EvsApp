@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,12 +33,12 @@ public class Election {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Name can't be blank")
+    @NotBlank(message = AppConstants.NOT_Blank)
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Future(message = "date should be future")
-    @NotNull(message = "Date can't be null")
+    @Future(message = AppConstants.FUTURE_DATE)
+    @NotNull(message = AppConstants.NOT_NULL)
     @Column(name = "election_date")
     private Date electionDate;
 

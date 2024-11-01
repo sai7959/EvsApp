@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import evs.electronicvotingsystem.POJO.User;
 import evs.electronicvotingsystem.POJO.VoterRequest;
 import evs.electronicvotingsystem.Repository.VoterRequestRepository;
 
@@ -49,6 +50,9 @@ public class VoterRequestServiceImpl implements VoterRequestService {
         existingVoterRequest.setUpdatedAt(Date.from(Instant.now()));
         existingVoterRequest.setUpdatedBy(userServiceImpl.getCurrentUser());
         voterRequestRepository.save(existingVoterRequest);
+        User user = userServiceImpl.getUserById(existingVoterRequest.getUser().getId());
+        user.setEligibleToVote(true);
+        userServiceImpl.saveUser(user);
 
     }
 
@@ -59,6 +63,10 @@ public class VoterRequestServiceImpl implements VoterRequestService {
         existingVoterRequest.setUpdatedAt(Date.from(Instant.now()));
         existingVoterRequest.setUpdatedBy(userServiceImpl.getCurrentUser());
         voterRequestRepository.save(existingVoterRequest);
+        User user = userServiceImpl.getUserById(existingVoterRequest.getUser().getId());
+        user.setEligibleToVote(false);
+        userServiceImpl.saveUser(user);
+
     }
 
     @Override

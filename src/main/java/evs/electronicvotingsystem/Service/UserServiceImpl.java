@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDetailsRepository detailsRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserServiceImpl() {
+        this.bCryptPasswordEncoder = new BCryptPasswordEncoder(); // Default strength
+    }
 
     @Override
     public User saveUser(User user) {
@@ -42,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(User user, Long id) {
         User existingUser = getUserById(id);
         existingUser.setEmail(user.getEmail());
-        existingUser.setPassword(user.getPassword());
+        existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         existingUser.setUpdatedAt(Date.from(Instant.now()));
         return userRepository.save(existingUser);
 

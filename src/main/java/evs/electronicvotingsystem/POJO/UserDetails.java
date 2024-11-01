@@ -4,10 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -66,9 +66,10 @@ public class ElectionServiceImpl implements ElectionService {
 
     @Override
     public boolean isPartyExists(Long electionId, String partyName) {
-        Election election = getElectionById(electionId);
         return ((List<Party>) partyRepository.findAll()).stream()
-                .filter(party -> party.getElection().equals(election) && party.isActive() && !party.isDeleted())
+                .filter(party -> party.getElection().getId() == electionId
+                        && party.getName().equals(partyName)
+                        && party.isActive() && !party.isDeleted())
                 .count() > 0;
     }
 
@@ -76,6 +77,15 @@ public class ElectionServiceImpl implements ElectionService {
     public Election addPartyToElection(Election election) {
         return electionRepository.save(election);
 
+    }
+
+    @Override
+    public List<Party> getElectionparties(Long electionId) {
+        Election election = getElectionById(electionId);
+        if (election == null) {
+            return null;
+        }
+        return election.getParties();
     }
 
 }

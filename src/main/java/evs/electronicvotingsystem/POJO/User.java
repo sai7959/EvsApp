@@ -36,6 +36,9 @@ public class User {
     @Column(name = "eligible_To_Vote")
     private boolean eligibleToVote;
 
+    @Column(name = "casted_vote")
+    private boolean castedVote;
+
     @Column(name = "created_at")
     private Date createdAt;
 

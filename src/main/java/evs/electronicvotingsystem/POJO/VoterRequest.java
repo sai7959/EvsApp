@@ -34,8 +34,8 @@ public class VoterRequest {
     @Column(name = "rejected")
     private boolean rejected = false;
 
-    @Column(name = "casted_vote")
-    private boolean castedVote;
+    // @Column(name = "casted_vote")
+    // private boolean castedVote;
 
     @Column(name = "created_at")
     private Date createdAt;

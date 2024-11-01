@@ -1,6 +1,12 @@
 package evs.electronicvotingsystem.POJO;
 
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,13 +32,13 @@ public class State {
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "Name can't be blank")
+    @NotBlank(message = AppConstants.NOT_Blank)
     @NotNull
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @NotNull(message = "Pupulation can't be empty")
-    @Min(value = 1, message = "Population can't be zero or negative")
+    @NotNull(message = AppConstants.NOT_NULL)
+    @Min(value = 1, message = AppConstants.MIN_VALUE)
     @Column(name = "pupulation")
     private Long pupulation;
 

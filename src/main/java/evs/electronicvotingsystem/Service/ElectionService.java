@@ -1,6 +1,9 @@
 package evs.electronicvotingsystem.Service;
 
 import evs.electronicvotingsystem.POJO.Election;
+import evs.electronicvotingsystem.POJO.Party;
+
+import java.util.List;
 
 public interface ElectionService {
     public Election saveElection(Election election, Long stateId);
@@ -14,5 +17,7 @@ public interface ElectionService {
     public boolean isPartyExists(Long electionId, String partyName);
 
     public Election addPartyToElection(Election election);
+
+    public List<Party> getElectionparties(Long electionId);
 
 }
