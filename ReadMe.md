@@ -1,4 +1,4 @@
-# Database Setup Instructions for EvsDB:
+# Database Setup Instructions for EvsDatabase:
 
 ## Step 1: Create the Database
 
