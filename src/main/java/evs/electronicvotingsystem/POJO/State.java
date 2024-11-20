@@ -1,11 +1,6 @@
 package evs.electronicvotingsystem.POJO;
 
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonView;
-
 import evs.electronicvotingsystem.Constants.AppConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
